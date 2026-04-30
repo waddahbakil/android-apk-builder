@@ -23,11 +23,11 @@ class MainActivity : Activity() {
         
         val layout = LinearLayout(this)
         layout.orientation = LinearLayout.VERTICAL
-        layout.setPadding(50, 50, 50, 50)
+        layout.setPadding(100, 200, 100, 200)
         
         val btn = Button(this)
         btn.text = "اختر ملف PDF للطباعة"
-        btn.textSize = 20f
+        btn.textSize = 22f
         btn.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "application/pdf"
@@ -52,12 +52,12 @@ class MainActivity : Activity() {
             val input = contentResolver.openInputStream(uri)
             val doc = PDDocument.load(input)
             val renderer = PDFRenderer(doc)
-            val bitmap = renderer.renderImageWithDPI(0, 300f)
+            val bitmap = renderer.renderImageWithDPI(0, 300f) // أول صفحة فقط
             doc.close()
             
             val printHelper = PrintHelper(this)
             printHelper.scaleMode = PrintHelper.SCALE_MODE_FIT
-            printHelper.printBitmap("PharmacyPDF", bitmap)
+            printHelper.printBitmap("فاتورة الصيدلية", bitmap)
             
         } catch (e: Exception) {
             Toast.makeText(this, "خطأ: ${e.message}", Toast.LENGTH_LONG).show()
